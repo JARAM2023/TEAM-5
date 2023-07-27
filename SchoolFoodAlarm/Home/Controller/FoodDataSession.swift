@@ -24,7 +24,8 @@ struct FoodData: Codable {
         init(from decoder: Decoder) throws {
             let container: KeyedDecodingContainer<FoodData.FoodItem.CodingKeys> = try decoder.container(keyedBy: FoodData.FoodItem.CodingKeys.self)
             self.food = try container.decode(String.self, forKey: .food)
-            let price = try container.decode(String.self, forKey: .price)
+            var price = try container.decode(String.self, forKey: .price)
+            price.removeAll(where: { $0 == ","})
             self.price = Int(price) ?? -1
         }
     }
